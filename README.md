@@ -1,35 +1,37 @@
-# Muscrypt
+﻿# Muscrypt
 
-Muscrypt adalah microsite statis untuk menyembunyikan dan menginterpretasikan teks dengan pola cipher sederhana, dengan visual yang selaras dengan identitas blog MuS.
+Muscrypt is a static microsite for transforming personal text through a simple symbolic cipher, with a visual direction aligned to the MuS blog identity.
 
-## Preview Lokal
+Muscrypt is an experimental symbolic cipher for personal expression, not a secure encryption tool.
 
-Buka `index.html` langsung di browser, atau jalankan server statis lokal.
+## Local Preview
 
-Contoh:
+Open `index.html` directly in a browser, or run a local static server.
+
+Examples:
 
 - VS Code Live Server
 - `python -m http.server`
 - `npx serve`
 
-## Struktur File
+## File Structure
 
-- `index.html` — struktur halaman utama
-- `style.css` — styling, dark mode, footer, dan custom cursor
-- `script.js` — logika cipher, copy output, dan inisialisasi cursor
-- `favicon/` — favicon site
-- `mus-symbol.svg` — simbol footer
-- `og-image.png` — thumbnail Open Graph untuk preview share
+- `index.html` - main page structure
+- `style.css` - styling, dark mode, footer, and custom cursor
+- `script.js` - cipher logic, output copy action, and cursor initialization
+- `favicon/` - site favicon assets
+- `mus-symbol.svg` - footer symbol
+- `og-image.png` - Open Graph thumbnail for social sharing
 
 ## Publish
 
-Project ini ditujukan untuk dipublish sebagai site statis di subdomain terpisah.
+This project is intended to be published as a static site on a separate subdomain.
 
-Contoh target:
+Example target:
 
 `https://muscrypt.musnotes.my.id/`
 
-Pastikan metadata di `index.html` sesuai dengan domain final sebelum deploy.
+Make sure the metadata in `index.html` matches the final domain before deployment.
 
 ## License
 
