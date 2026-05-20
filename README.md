@@ -4,6 +4,8 @@ Muscrypt is a static microsite for transforming personal text through a simple s
 
 Muscrypt is an experimental symbolic cipher for personal expression, not a secure encryption tool.
 
+![Screenshot](screenshot.png)
+
 ## Local Preview
 
 Open `index.html` directly in a browser, or run a local static server.
@@ -27,13 +29,6 @@ Examples:
 
 This project is intended to be published as a static site on a separate subdomain.
 
-Example target:
-
 `https://muscrypt.musnotes.my.id/`
 
 Make sure the metadata in `index.html` matches the final domain before deployment.
-
-## License
-
-Copyright (c) 2026 MuS  
-All rights reserved.
