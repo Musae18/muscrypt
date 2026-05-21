@@ -40,6 +40,47 @@ const outputLabel = document.getElementById('outputLabel');
 const btnEncode = document.getElementById('btnEncode');
 const btnDecode = document.getElementById('btnDecode');
 const btnCopy = document.getElementById('btnCopy');
+const btnExample = document.getElementById('btnExample');
+const btnSwap = document.getElementById('btnSwap');
+const btnClear = document.getElementById('btnClear');
+const exampleText = "Sepertinya ekspresi dalam tulisan memang ditakdirkan untuk menafsirkan dirinya sendiri";
+
+let copyFeedbackTimer;
+let swapFeedbackTimer;
+
+function setCopyButtonText(text) {
+    btnCopy.textContent = text;
+}
+
+function resetCopyButton(delay = 0) {
+    window.clearTimeout(copyFeedbackTimer);
+
+    if (delay > 0) {
+        copyFeedbackTimer = window.setTimeout(() => {
+            setCopyButtonText('Copy');
+        }, delay);
+        return;
+    }
+
+    setCopyButtonText('Copy');
+}
+
+function setSwapButtonText(text) {
+    btnSwap.textContent = text;
+}
+
+function resetSwapButton(delay = 0) {
+    window.clearTimeout(swapFeedbackTimer);
+
+    if (delay > 0) {
+        swapFeedbackTimer = window.setTimeout(() => {
+            setSwapButtonText('⇄ Tukar');
+        }, delay);
+        return;
+    }
+
+    setSwapButtonText('⇄ Tukar');
+}
 
 function updateOutput(transform, labelText) {
     const teksInput = inputText.value;
@@ -59,10 +100,8 @@ async function copyOutput() {
     const teksOutput = outputText.value;
 
     if (!teksOutput) {
-        btnCopy.textContent = 'Kosong';
-        window.setTimeout(() => {
-            btnCopy.textContent = 'Copy';
-        }, 1200);
+        setCopyButtonText('Kosong');
+        resetCopyButton(1200);
         return;
     }
 
@@ -75,13 +114,40 @@ async function copyOutput() {
         outputText.setSelectionRange(outputText.value.length, outputText.value.length);
     }
 
-    btnCopy.textContent = 'Copied';
-    window.setTimeout(() => {
-        btnCopy.textContent = 'Copy';
-    }, 1200);
+    setCopyButtonText('Copied');
+    resetCopyButton(1200);
 }
 
 btnCopy.addEventListener('click', copyOutput);
+
+btnExample.addEventListener('click', () => {
+    inputText.value = exampleText;
+    inputText.focus();
+    inputText.setSelectionRange(inputText.value.length, inputText.value.length);
+});
+
+btnSwap.addEventListener('click', () => {
+    if (!outputText.value) {
+        setSwapButtonText('Masih kosong');
+        resetSwapButton(1200);
+        return;
+    }
+
+    inputText.value = outputText.value;
+    inputText.focus();
+    inputText.setSelectionRange(inputText.value.length, inputText.value.length);
+    setSwapButtonText('Dipindah');
+    resetSwapButton(1200);
+});
+
+btnClear.addEventListener('click', () => {
+    inputText.value = '';
+    outputText.value = '';
+    outputLabel.innerText = 'Teks yang hanya dimengerti oleh teks itu sendiri :)';
+    resetCopyButton();
+    resetSwapButton();
+    inputText.focus();
+});
 
 function initMusCustomCursor() {
     const mediaQuery = window.matchMedia('(hover: none), (pointer: coarse)');

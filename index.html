@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Muscrypt • Experimental Text Abstraction</title>
-    <meta name="description" content="Muscrypt adalah ruang kecil untuk menyembunyikan ekspresi dan membacanya kembali lewat pola cipher.">
+    <meta name="description" content="Muscrypt adalah eksperimen transformasi teks yang mengubah tulisan menjadi pola simbolik menggunakan pemetaan Monoalphabetic Substitution Cipher">
     <meta name="theme-color" content="#fcfbfa">
     <meta name="color-scheme" content="light dark">
     <link rel="canonical" href="https://muscrypt.musnotes.my.id/">
@@ -14,17 +14,17 @@
     <meta property="og:locale" content="id_ID">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Muscrypt • Experimental Text Abstraction">
-    <meta property="og:description" content="Ruang kecil untuk menyembunyikan ekspresi dan membacanya kembali lewat pola cipher.">
+    <meta property="og:description" content="Ruang untuk menyembunyikan ekspresi dalam tulisan dan membacanya kembali melalui transformasi teks berbasis Monoalphabetic Substitution Cipher">
     <meta property="og:url" content="https://muscrypt.musnotes.my.id/">
     <meta property="og:site_name" content="Muscrypt">
     <meta property="og:image" content="https://muscrypt.musnotes.my.id/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Muscrypt experimental text abstraction interface">
+    <meta property="og:image:alt" content="Antarmuka abstraksi teks eksperimental Muscrypt">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Muscrypt">
-    <meta name="twitter:description" content="Ruang kecil untuk menyembunyikan ekspresi dan membacanya kembali lewat pola cipher.">
+    <meta name="twitter:description" content="Ruang untuk menyembunyikan ekspresi dan membacanya kembali melalui transformasi teks berbasis Monoalphabetic Substitution Cipher">
     <meta name="twitter:image" content="https://muscrypt.musnotes.my.id/og-image.png">
 
     <link rel="icon" href="favicon/favicon.ico" sizes="any">
@@ -50,13 +50,20 @@
 
                 <div class="input-group">
                     <label for="inputText">Apa yang ingin kamu ekspresikan?</label>
-                    <textarea id="inputText" rows="5" placeholder="Tuliskan ungkapan di sini, atau masukkan ungkapan yang ingin kamu interpretasikan."></textarea>
+                    <textarea id="inputText" rows="5" placeholder="Tulis sesuatu yang belum siap kamu ucapkan keras-keras, atau tempel teks yang ingin kamu tafsirkan ulang."></textarea>
+                    <div class="input-tools" aria-label="Bantuan input">
+                        <button id="btnExample" class="input-tool-button" type="button">Coba contoh</button>
+                        <button id="btnSwap" class="input-tool-button" type="button">⇄ Tukar</button>
+                        <button id="btnClear" class="input-tool-button" type="button">Bersihkan</button>
+                    </div>
                 </div>
 
                 <div class="action-buttons">
                     <button id="btnEncode" type="button">Sembunyikan</button>
                     <button id="btnDecode" type="button">Interpretasikan</button>
                 </div>
+
+                <p class="cipher-disclaimer">Muscrypt is an experimental symbolic cipher for personal expression, not a secure encryption tool.</p>
 
                 <div class="input-group output-group">
                     <div class="output-head">
