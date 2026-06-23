@@ -39,14 +39,30 @@ const outputText = document.getElementById('outputText');
 const outputLabel = document.getElementById('outputLabel');
 const btnEncode = document.getElementById('btnEncode');
 const btnDecode = document.getElementById('btnDecode');
+const btnProcess = document.getElementById('btnProcess');
 const btnCopy = document.getElementById('btnCopy');
 const btnExample = document.getElementById('btnExample');
 const btnSwap = document.getElementById('btnSwap');
 const btnClear = document.getElementById('btnClear');
 const exampleText = "Sepertinya ekspresi dalam tulisan memang ditakdirkan untuk menafsirkan dirinya sendiri";
 
+let activeMode = 'hide';
 let copyFeedbackTimer;
 let swapFeedbackTimer;
+let outputPulseTimer;
+
+const modeConfig = {
+    hide: {
+        buttonText: 'Sembunyikan',
+        labelText: 'Teks yang hanya dimengerti oleh teks itu sendiri.',
+        transform: encode
+    },
+    interpret: {
+        buttonText: 'Interpretasikan',
+        labelText: 'Teks yang bisa kamu interpretasikan.',
+        transform: decode
+    }
+};
 
 function setCopyButtonText(text) {
     btnCopy.textContent = text;
@@ -82,19 +98,69 @@ function resetSwapButton(delay = 0) {
     setSwapButtonText('⇄ Tukar');
 }
 
-function updateOutput(transform, labelText) {
-    const teksInput = inputText.value;
-    outputText.value = transform(teksInput);
-    outputLabel.innerText = labelText;
+function updateUI() {
+    const isHideMode = activeMode === 'hide';
+
+    btnEncode.classList.toggle('is-active', isHideMode);
+    btnDecode.classList.toggle('is-active', !isHideMode);
+    btnEncode.setAttribute('aria-checked', String(isHideMode));
+    btnDecode.setAttribute('aria-checked', String(!isHideMode));
+    btnProcess.textContent = modeConfig[activeMode].buttonText;
 }
 
-btnEncode.addEventListener('click', () => {
-    updateOutput(encode, 'Teks yang hanya dimengerti oleh teks itu sendiri.');
-});
+function setMode(mode) {
+    activeMode = mode;
+    updateUI();
+}
 
-btnDecode.addEventListener('click', () => {
-    updateOutput(decode, 'Teks yang bisa kamu interpretasikan.');
-});
+function setOutput(value, labelText = outputLabel.innerText) {
+    window.clearTimeout(outputPulseTimer);
+
+    outputText.value = value;
+    outputLabel.innerText = labelText;
+    outputText.classList.toggle('is-empty', !value);
+    outputText.classList.toggle('has-output', Boolean(value));
+    btnCopy.classList.toggle('is-ready', Boolean(value));
+
+    if (value) {
+        outputText.classList.add('is-fresh');
+        outputPulseTimer = window.setTimeout(() => {
+            outputText.classList.remove('is-fresh');
+        }, 650);
+    } else {
+        outputText.classList.remove('is-fresh');
+    }
+}
+
+function scrollOutputIntoView() {
+    if (!window.matchMedia('(max-width: 640px)').matches) {
+        return;
+    }
+
+    outputText.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function processText() {
+    const teksInput = inputText.value;
+
+    if (!teksInput.trim()) {
+        inputText.focus();
+        inputText.classList.add('needs-input');
+        window.setTimeout(() => {
+            inputText.classList.remove('needs-input');
+        }, 650);
+        return;
+    }
+
+    const config = modeConfig[activeMode];
+    setOutput(config.transform(teksInput), config.labelText);
+    scrollOutputIntoView();
+}
+
+btnEncode.addEventListener('click', () => setMode('hide'));
+btnDecode.addEventListener('click', () => setMode('interpret'));
+
+btnProcess.addEventListener('click', processText);
 
 async function copyOutput() {
     const teksOutput = outputText.value;
@@ -142,12 +208,14 @@ btnSwap.addEventListener('click', () => {
 
 btnClear.addEventListener('click', () => {
     inputText.value = '';
-    outputText.value = '';
-    outputLabel.innerText = 'Teks yang hanya dimengerti oleh teks itu sendiri :)';
+    setOutput('', 'Teks yang hanya dimengerti oleh teks itu sendiri :)');
     resetCopyButton();
     resetSwapButton();
     inputText.focus();
 });
+
+setOutput('');
+updateUI();
 
 function initMusCustomCursor() {
     const mediaQuery = window.matchMedia('(hover: none), (pointer: coarse)');
