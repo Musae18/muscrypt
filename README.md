@@ -6,16 +6,6 @@ Muscrypt is an experimental symbolic cipher for personal expression, not a secur
 
 ![Screenshot](screenshot.png)
 
-## Local Preview
-
-Open `index.html` directly in a browser, or run a local static server.
-
-Examples:
-
-- VS Code Live Server
-- `python -m http.server`
-- `npx serve`
-
 ## File Structure
 
 - `index.html` - main page structure
